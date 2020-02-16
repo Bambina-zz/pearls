@@ -2,9 +2,8 @@
 # rotate 3 times
 # output [4,5,6,7,8,9,10,1,2,3]
 
-x = [1,2,3,4,5,6,7,8,9,10]
-rotdist = 7
-length = len(x)
+# x = [1,2,3,4,5,6,7,8,9,10]
+# rotdist = 3
 
 def gcd(p, j):
     a = p
@@ -18,22 +17,26 @@ def gcd(p, j):
             a = b
             b = r
 
-def rotate():
-    for i in range(gcd(length, rotdist)):
+def rotate(array, rotdist):
+    n = len(array)
+    if rotdist == 0 or rotdist == n:
+        return array
+    for i in range(gcd(n, rotdist)):
         p = i
         j = p + rotdist
-        tmp = x[p]
+        tmp = array[p]
         counter = 0
         while counter != 1:
-            if j >= length:
-                j -= length
+            if j >= n:
+                j -= n
             if j == i:
                 counter += 1
                 break
-            x[p] = x[j]
+            array[p] = array[j]
             p = j
             j += rotdist
-        x[p] = tmp
+        array[p] = tmp
+    return array
 
-rotate()
-print(x)
+# rotate(x, rotdist)
+# print(x)
