@@ -2,10 +2,7 @@
 using namespace std;
 
 /** s-in
- * 3
- * 3 1 9 X
- * 3 3 3 b 3 X 3 b
- * 3 1 9 X
+ * I
  */
 
 /** s-out
@@ -21,22 +18,28 @@ using namespace std;
  */
 
 int main() {
-  int num_inputs;
-  cin >> num_inputs;
+  string input;
+  cin >> input;
+  if (input != "I") {
+    return 0;
+  }
+  string data_i[3][8] = {{"3","1","9","X"},
+                  {"3","3","3","b","3","X","3","b"},
+                  {"3","1","9","X"}};
   
-  for (int i = 0; i < num_inputs; i++) {
-    int num_lines, num_patterns;
-    cin >> num_lines >> num_patterns;
+  for (int i = 0; i < 3; i++) {
+    string item[8] = data_i[i];
+    int num_lines = stoi(item[0]);
+    int num_patterns = stoi(item[1]);
     string text;
     for (int j = 0; j < num_patterns; j++) {
-      int num_chars;
-      string letter;
-      cin >> num_chars >> letter;
+      int num_chars = stoi(item[j*2+2]);
+      string c = item[j*2+3];
       for (int k = 0; k < num_chars; k++) {
-        if (letter == "b") {
+        if (c == "b") {
           text += " ";
         } else {
-          text += letter;
+          text += c;
         }
       }
     }
