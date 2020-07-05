@@ -6,27 +6,27 @@ using namespace std;
  */
 
 /** s-out
- *   XXXXX
- *  XX   XX
- * XX      
- * XX
- * XX      
- *  XX   XX
- *   XXXXX
+  XXXXX   
+ XX   XX  
+xx        
+xx        
+xx        
+ XX   XX  
+  XXXXX   
  */
 
 /** s-in
- * I
+ * CI
  */
 
 /** s-out
- * XXXXXXXXX
- * XXXXXXXXX
- *    XXX   
- *    XXX   
- *    XXX   
- * XXXXXXXXX
- * XXXXXXXXX
+  XXXXX   XXXXXXXXX  
+ XX   XX  XXXXXXXXX  
+xx           XXX     
+xx           XXX     
+xx           XXX     
+ XX   XX  XXXXXXXXX  
+  XXXXX   XXXXXXXXX  
  */
 
 string trim(string inputText) {
@@ -47,34 +47,38 @@ int main() {
     cout << "Input C or I";
     return 0;
   }
+  const int NUM_LINES = 7;
 
-  array<array<string, 10>, 5> data_c{{
-    {"1","3","2","b","5","X","1","b"},
-    {"1","4","1","b","2","X","3","b","2","X"},
-    {"3","2","2","x","6","b"},
-    {"1","4","1","b","2","X","3","b","2","X"},
-    {"1","3","2","b","5","X","1","b"}}};
-  array<array<string, 10>, 5> data_i{{
-    {"2","1","9","X"},
-    {"3","3","3","b","3","X","3","b"},
-    {"2","1","9","X"},
-    {"0","0"},
-    {"0","0"}}};
+  array<array<string, 9>, NUM_LINES> data_c{{
+    {"3","2","b","5","X","1","b"},
+    {"4","1","b","2","X","3","b","2","X"},
+    {"2","2","x","6","b"},
+    {"2","2","x","6","b"},
+    {"2","2","x","6","b"},
+    {"4","1","b","2","X","3","b","2","X"},
+    {"3","2","b","5","X","1","b"}}};
+  array<array<string, 9>, NUM_LINES> data_i{{
+    {"1","9","X"},
+    {"1","9","X"},
+    {"3","3","b","3","X","3","b"},
+    {"3","3","b","3","X","3","b"},
+    {"3","3","b","3","X","3","b"},
+    {"1","9","X"},
+    {"1","9","X"}}};
 
-  map<char, array<array<string, 10>, 5>*> map;
+  map<char, array<array<string, 9>, NUM_LINES>*> map;
   map['C'] = &data_c;
   map['I'] = &data_i;
 
+  array<string, NUM_LINES> result = {"","","","","","",""};
   for(unsigned int i = 0; i < format.length(); i++) {
-    array<array<string, 10>, 5> target_data = *map[format[i]];
-    int S = target_data.size();
-    for(int j = 0; j < S; j++) {
-      int num_lines = stoi(target_data[j][0]);
-      int num_patterns = stoi(target_data[j][1]);
+    array<array<string, 9>, NUM_LINES> target_data = *map[format[i]];
+    for(int j = 0; j < NUM_LINES; j++) {
+      int num_patterns = stoi(target_data[j][0]);
       string text;
       for(int k = 0; k < num_patterns; k++) {
-        int num_repeat = stoi(target_data[j][k*2+2]);
-        string target_char = target_data[j][k*2+3];
+        int num_repeat = stoi(target_data[j][k*2+1]);
+        string target_char = target_data[j][k*2+2];
         for (int l = 0; l < num_repeat; l++) {
           if (target_char == "b") {
             text += " ";
@@ -83,10 +87,11 @@ int main() {
           }
         }
       }
-      for(int m = 0; m < num_lines; m++) {
-        cout << text << endl;
-      }
+      result[j] += text + "  ";
     }
-    cout << endl;
+  }
+
+  for(int m = 0; m < NUM_LINES; m++) {
+    cout << result[m] << endl;
   }
 }
